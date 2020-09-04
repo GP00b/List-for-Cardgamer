@@ -1,0 +1,23 @@
+<header class="mb-5">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+    <%= link_to("ListForCardgamer", "/", class: "navbar-brand mr-auto text-light" ) %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <% if session[:user_id] %>
+          <li class="nav-item nav-link">
+            現在ログインしているユーザーのid:
+            <%= session[:user_id] %>
+          </li>
+          <%= link_to("ログアウト", "/logout", {method: :post, class: "nav-item nav-link"}) %>
+        <% else %>
+          <%= link_to("アカウント作成", "signup", class: "nav-item nav-link" ) %>
+          <%= link_to("ログイン", "login", class: "nav-item nav-link" ) %>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</header>
