@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_01_110053) do
+ActiveRecord::Schema.define(version: 2020_09_08_190733) do
+
+  create_table "decks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "imagefile_name"
+    t.string "comment"
+    t.string "number_of_use"
+    t.string "number_of_wins"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_decks_on_user_id"
+  end
+
+  create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "deck_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deck_id"], name: "index_favorites_on_deck_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -21,4 +42,7 @@ ActiveRecord::Schema.define(version: 2020_09_01_110053) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "decks", "users"
+  add_foreign_key "favorites", "decks"
+  add_foreign_key "favorites", "users"
 end

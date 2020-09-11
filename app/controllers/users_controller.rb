@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_user_logged_in, only: [:edit, :show]
   
   def show
     @user = User.find_by(id: params[:id])
@@ -12,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.imagefile_name = "default_user.png"
     if @user.save
-      flash[:notice] = "ユーザー登録が完了しました"
+      flash[:success] = "ユーザー登録が完了しました"
       redirect_to("/")
     else
       render("users/new")
@@ -20,15 +21,34 @@ class UsersController < ApplicationController
   end
   
   def edit
-    
+    @user = User.find_by(id: params[:id])
   end
   
-  def withdrawal
+  def update
+    @user = User.find_by(id: params[:id])
+    if @user.update(user_params)
+      flash[:success] = 'ユーザー編集が完了しました'
+      redirect_to @user
+    else
+      flash.now[:danger] = 'ユーザー編集に失敗しました'
+      render :edit
+    end
+  end
+  
+  def destroy
+    @user = User.find_by(id: params[:id])
+    @user.destroy
     
+    flash[:success] = '正常に退会しました'
+    redirect_to root_url
   end
   
   def user_params
-    params.require(:user).permit(:name, :email, :password)
+    params.require(:user).permit(:name, :imagefile_name, :email, :password)
+  end
+  
+  def logged_in?
+    !!current_user
   end
   
 end

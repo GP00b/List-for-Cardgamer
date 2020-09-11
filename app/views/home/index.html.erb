@@ -1,0 +1,41 @@
+<% if logged_in? %>
+<div class="row">
+    <div class="col-12 text-light">
+      <img src="<%= "#{current_user.imagefile_name}" %>" class="mx-auto d-block rounded-circle bg-light" height="256" width="256">
+      <h2 class="text-center mt-5"><%= current_user.name %></h2>
+    </div>
+</div>
+<div class="row">
+    <div class="offset-2 col-4">
+        <%= link_to("デッキ登録",new_deck_path(current_user),class: "btn btn-primary w-100 mx-auto d-block") %>
+    </div>
+    <div class="col-4">
+        <%= link_to("お気に入りデッキ一覧へ",deck_favorites_path(current_user),class: "btn btn-primary w-100 mx-auto d-block") %>
+    </div>
+</div>
+<div class="row">
+  <div class="col-12 mt-5">
+    <%= paginate @decks %>
+  </div>
+</div>
+<div class="row">
+    <% @decks.each do |deck| %>
+      <div class="col-2 mt-3">
+        <%= link_to image_tag("#{deck.imagefile_name}", :size =>'160x224'), deck_path(deck) %>
+      </div>
+    <% end %>
+</div>
+<div class="row">
+  <div class="col-12 mt-5">
+    <%= paginate @decks %>
+  </div>
+</div>
+<% else %>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h1>ようこそ！デッキ管理アプリ<br>List  for Cardgamerへ！！</h1>
+      <%= link_to("アカウント作成", "signup", class: "btn btn-lg btn-primary" ) %>
+      <%= link_to("ログイン", "login", class: "btn btn-lg btn-primary" ) %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-5">
+        <img src="<%= "#{@deck.imagefile_name}" %>" width="400">
+    </div>
+    <div class="col-7">
+        <h1 class="text-center text-light mt-5">
+            <%= "#{@deck.name}" %>
+            <% if current_user.favorited?(@deck) %>
+                <%= link_to(deck_favorite_path(@deck.id), {method: :delete}) do %>
+                  <span class="fas fa-star"></span>
+                <% end %>
+            <% else %>
+                <%= link_to(deck_favorites_path(@deck.id), {method: :post}) do %>
+                     <span class="far fa-star"></span>
+                <% end %>
+            <% end %>
+        </h1>
+        <div class="bg-light border">
+            <p class="p-2 mb-0 text-center border"><%= "#{@deck.comment}" %></p>
+            <table class="table table-bordered text-center mb-0">
+                <tr>
+                    <%= form_with(model: @deck, local: true) do |f| %>
+                    <td class="form-group">
+                        <div>
+                            <%= f.label :number_of_use, '使用数' %>
+                        </div>
+                        <div>
+                            <%= f.text_field :number_of_use, class: 'form-control' %>
+                        </div>
+                    </td>
+                    <td class="form-group">
+                        <div>
+                            <%= f.label :number_of_wins, '勝利回数' %>
+                        </div>
+                        <div>
+                            <%= f.text_field :number_of_wins, class: 'form-control' %>
+                        </div>
+                    </td>
+                    <td>
+                        <p>勝率</p>
+                        <div>
+                            <%= @rate.round(2) %>%
+                        </div>
+                        <div>
+                            <%= f.submit '計算', class: 'btn btn-primary btn-block'  %>
+                        </div>
+                    </td>
+                    <% end %>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-6">
+        <%= link_to("リストに戻る", root_url, class: 'btn btn-primary' ) %>
+    </div>
+    <div class="col-3">
+        <%= link_to("編集", edit_deck_path, class: 'btn btn-primary btn-block' ) %>
+    </div>
+    <div class="col-3">
+        <%= link_to '削除', @deck, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger btn-block' %>
+    </div>
+</div>
