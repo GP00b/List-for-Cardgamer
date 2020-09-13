@@ -17,37 +17,37 @@
         </h1>
         <div class="bg-light border">
             <p class="p-2 mb-0 text-center border"><%= "#{@deck.comment}" %></p>
-            <table class="table table-bordered text-center mb-0">
-                <tr>
-                    <%= form_with(model: @deck, local: true) do |f| %>
-                    <td class="form-group">
-                        <div>
-                            <%= f.label :number_of_use, '使用数' %>
-                        </div>
-                        <div>
-                            <%= f.text_field :number_of_use, class: 'form-control' %>
-                        </div>
-                    </td>
-                    <td class="form-group">
-                        <div>
-                            <%= f.label :number_of_wins, '勝利回数' %>
-                        </div>
-                        <div>
-                            <%= f.text_field :number_of_wins, class: 'form-control' %>
-                        </div>
-                    </td>
-                    <td>
-                        <p>勝率</p>
-                        <div>
-                            <%= @rate.round(2) %>%
-                        </div>
-                        <div>
-                            <%= f.submit '計算', class: 'btn btn-primary btn-block'  %>
-                        </div>
-                    </td>
-                    <% end %>
-                </tr>
-            </table>
+            <%= form_with(model: @deck, local: true) do |f| %>
+                <table class="table table-bordered text-center mb-0">
+                    <tr>
+                        <td class="form-group">
+                            <div>
+                                <%= f.label :number_of_use, '使用数' %>
+                            </div>
+                            <div>
+                                <%= f.text_field :number_of_use, class: 'form-control' %>
+                            </div>
+                        </td>
+                        <td class="form-group">
+                            <div>
+                                <%= f.label :number_of_wins, '勝利回数' %>
+                            </div>
+                            <div>
+                                <%= f.text_field :number_of_wins, class: 'form-control' %>
+                            </div>
+                        </td>
+                        <td>
+                            <p>勝率</p>
+                            <div>
+                                <%= @rate.round(2) %>%
+                            </div>
+                            <div>
+                                <%= f.submit '計算', class: 'btn btn-primary btn-block'  %>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            <% end %>
         </div>
     </div>
 </div>

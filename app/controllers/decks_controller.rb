@@ -8,7 +8,7 @@ class DecksController < ApplicationController
   
   def create
     @deck = current_user.decks.build(deck_params)
-    if @deck.save
+    if @deck.save then
       flash[:success] = 'デッキを登録しました。'
       redirect_to root_url
     else
@@ -21,12 +21,12 @@ class DecksController < ApplicationController
   def show
     @deck = current_user.decks.find_by(id: params[:id])
     @favorite = current_user.favorites.new
-    if @deck.number_of_wins && @deck.number_of_use
-      wins = @deck.number_of_wins.to_i
-      use = @deck.number_of_use.to_i
-      @rate = wins.to_f / use.to_f
-    else
+    wins = @deck.number_of_wins.to_i
+    use = @deck.number_of_use.to_i
+    if (wins == 0) || (use == 0) then
       @rate = 0
+    elsif wins && use then
+      @rate = wins.to_f / use.to_f * 100
     end
   end
   
@@ -36,12 +36,35 @@ class DecksController < ApplicationController
   
   def update
     @deck = current_user.decks.find_by(id: params[:id])
-    if @deck.update(deck_params)
-      flash[:success] = 'デッキ編集が完了しました'
-      redirect_to deck_path
+    oldname = @deck.name
+    oldimagefile_name = @deck.imagefile_name
+    oldcomment = @deck.comment
+    oldnumber_of_wins = @deck.number_of_wins.to_i
+    oldnumber_of_use = @deck.number_of_use.to_i
+    oldrate = oldnumber_of_wins.to_f / oldnumber_of_use.to_f * 100
+    if @deck.update(deck_params) then
+      if @deck.name != oldname || @deck.imagefile_name != oldimagefile_name || @deck.comment != oldcomment
+        flash[:success] = 'デッキ編集が完了しました。'
+        redirect_to deck_path
+      else
+        flash[:success] = '勝率を計算しました。'
+        redirect_to deck_path
+      end
     else
-      flash.now[:danger] = 'デッキ編集に失敗しました'
-      render edit_deck_path
+      if @deck.number_of_wins=="" || @deck.number_of_use=="" then
+        flash.now[:danger] = '数値を入力してください。'
+          @deck.number_of_wins = oldnumber_of_wins.to_i
+          @deck.number_of_use = oldnumber_of_use.to_i
+          if (oldnumber_of_wins == 0) || (oldnumber_of_use == 0) then
+            @rate = 0
+          else
+            @rate = oldrate
+          end
+        render action: :show
+      else
+        flash.now[:danger] = 'デッキ編集に失敗しました。'
+        render edit_deck_path
+      end
     end
   end
   

@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 2020_09_08_190733) do
     t.string "name"
     t.string "imagefile_name"
     t.string "comment"
-    t.string "number_of_use"
-    t.string "number_of_wins"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "number_of_wins"
+    t.string "number_of_use"
     t.index ["user_id"], name: "index_decks_on_user_id"
   end
 

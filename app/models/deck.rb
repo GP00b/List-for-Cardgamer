@@ -3,6 +3,8 @@ class Deck < ApplicationRecord
   
   validates :name, {presence: true}
   validates :comment, {presence: true}
+  validates :number_of_use, numericality: { only_integer: true }
+  validates :number_of_wins, numericality: { only_integer: true }
   mount_uploader :imagefile_name, ImageUploader
   
   has_many :favorites

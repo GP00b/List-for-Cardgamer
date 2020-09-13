@@ -18,6 +18,8 @@
                 <%= f.label :comment, 'デッキ説明' %>
                 <%= f.text_area :comment, class: 'form-control' %>
             </div>
+            <%= f.hidden_field :number_of_use, :value => 0 %>
+            <%= f.hidden_field :number_of_wins, :value => 0 %>
             <%= f.submit '登録', class: 'btn btn-primary btn-block'  %>
         <% end %>
     </div>

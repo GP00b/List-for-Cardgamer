@@ -14,7 +14,8 @@ class UsersController < ApplicationController
     @user.imagefile_name = "default_user.png"
     if @user.save
       flash[:success] = "ユーザー登録が完了しました"
-      redirect_to("/")
+      session[:user_id] = @user.id
+      redirect_to root_url
     else
       render("users/new")
     end
@@ -42,6 +43,8 @@ class UsersController < ApplicationController
     flash[:success] = '正常に退会しました'
     redirect_to root_url
   end
+  
+  private
   
   def user_params
     params.require(:user).permit(:name, :imagefile_name, :email, :password)
