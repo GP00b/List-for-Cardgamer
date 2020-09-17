@@ -92,7 +92,7 @@ class DecksController < ApplicationController
             @rate = oldrate
           end
         render action: :show
-      elsif @deck.name == "" || @deck.comment == "" || @deck.name.length > 15 || @deck.comment.length > 255 then 
+      elsif @deck.name == "" || @deck.name.length > 15 || @deck.comment.length > 255 then 
         flash.now[:danger] = 'デッキ編集に失敗しました。'
         render action: :edit
       elsif @deck.number_of_wins.to_i != /^[0-9]+$/ || @deck.number_of_use.to_i != /^[0-9]+$/ then
