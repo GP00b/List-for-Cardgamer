@@ -9,6 +9,8 @@
       <ul class="navbar-nav">
         <% if logged_in? %>
           <%= link_to("#{current_user.name}",user_path(current_user),class: "nav-item nav-link") %>
+          <%= link_to("デッキ一覧",root_url,class: "nav-item nav-link") %>
+          <%= link_to("お気に入りデッキ一覧",deck_favorites_path(current_user),class: "nav-item nav-link") %>
           <%= link_to("ログアウト", logout_path, {method: :delete, class: "nav-item nav-link"}) %>
         <% else %>
           <%= link_to("アカウント作成", "signup", class: "nav-item nav-link" ) %>

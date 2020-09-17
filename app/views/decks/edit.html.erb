@@ -1,10 +1,13 @@
 <div class="row">
-    <div class="offset-2 col-xs-8">
-        <div class="mx-auto text-light font-weight-light h1 mt-5 mb-3">
-            デッキ編集
-        </div>
+    <div class="offset-lg-2 col-lg-8">
+        <h1 class="mx-auto text-light font-weight-light mt-5 mb-3">デッキ編集</h1>
     </div>
-    <div class="bg-light offset-2 col-xs-8 p-4">
+    <div class="bg-light offset-lg-2 col-lg-8 p-4">
+        <% @deck.errors.full_messages.each do |message| %>
+            <div class="form-error alert alert-danger">
+                <%= message %>
+            </div>
+        <% end %>
         <%= form_with(model: @deck, local: true, multipart: true) do |f| %>
             <div class="form-group">
                 <%= f.label :name, 'デッキ名' %>
@@ -15,11 +18,11 @@
                 <%= f.file_field :imagefile_name, class: 'form-control' %>
             </div>
             <div class="form-group">
-                <%= f.label :comment, 'デッキ説明' %>
+                <%= f.label :comment, 'デッキ説明(未入力でも可)' %>
                 <%= f.text_area :comment, class: 'form-control' %>
             </div>
-            <%= f.hidden_field :number_of_use, :value => @deck.number_of_use %>
-            <%= f.hidden_field :number_of_wins, :value => @deck.number_of_wins %>
+            <%= f.hidden_field :number_of_use, :value => @deck.number_of_use.to_i %>
+            <%= f.hidden_field :number_of_wins, :value => @deck.number_of_wins.to_i %>
             <%= f.submit '保存', class: 'btn btn-primary btn-block'  %>
         <% end %>
     </div>

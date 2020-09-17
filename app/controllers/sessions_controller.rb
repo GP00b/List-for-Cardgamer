@@ -9,7 +9,6 @@ class SessionsController < ApplicationController
       flash[:success] = "ログインしました"
       redirect_to root_url
     else
-      flash.now[:danger] = "メールアドレスまたはパスワードが間違っています"
       @email = params[:session][:email]
       @password = params[:session][:password]
       render :new
@@ -32,7 +31,9 @@ class SessionsController < ApplicationController
       return true
     else
       # ログイン失敗
+      @error_message = "メールアドレスまたはパスワードが間違っています"
       return false
     end
   end
 end
+

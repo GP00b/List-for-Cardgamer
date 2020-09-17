@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:edit, :show]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   
   def show
     @user = User.find_by(id: params[:id])
@@ -46,8 +47,15 @@ class UsersController < ApplicationController
   
   private
   
+  def ensure_correct_user
+    if current_user.id != params[:id].to_i
+      flash[:danger] = "権限がありません"
+      redirect_to root_url
+    end
+  end
+  
   def user_params
-    params.require(:user).permit(:name, :imagefile_name, :email, :password)
+    params.require(:user).permit(:name, :imagefile_name, :email, :password, :password_confirmation)
   end
   
   def logged_in?

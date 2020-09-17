@@ -13,3 +13,35 @@
  *= require_tree .
  *= require_self
  */
+p {
+  word-wrap: break-word;
+}
+ 
+table {
+    position: absolute;
+	bottom: 0;
+}
+ 
+.comment {
+    position: relative;
+    height: 400px;
+    width: 635px;
+}
+ 
+.showcardimage {
+    width: 450px;
+    height: 629px;
+    object-fit: cover;
+}
+
+.cardimage {
+    width: 160px;
+    height: 221px;
+    object-fit: cover;
+}
+
+.userimage {
+    height: 256px; 
+    width: 256px;
+    object-fit: cover;
+}

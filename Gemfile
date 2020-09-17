@@ -62,6 +62,12 @@ gem 'carrierwave'
 
 gem 'mini_magick'
 
+gem "aws-sdk-s3", require: false
+
+gem 'rails-i18n'
+
 group :production do
   gem 'pg', '>= 0.18', '< 2.0'
+  gem 'rails_12factor', '0.0.2'
+  gem 'fog-aws'
 end
